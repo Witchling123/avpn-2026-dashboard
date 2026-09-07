@@ -24,6 +24,9 @@ a{color:var(--claret)}
 header{background:var(--purple);color:#fff;padding:26px 0 0}
 header h1{color:#fff;font-size:1.6rem;margin-bottom:.25em}
 header p{margin:0 0 18px;color:#e8dced;max-width:72ch;font-size:.94rem}
+ul.lede{margin:0 0 18px;padding-left:20px;color:#e8dced;max-width:74ch;font-size:.94rem}
+ul.lede li{margin:0 0 5px}
+ul.lede li::marker{color:var(--orange)}
 .badge{display:inline-block;background:var(--orange);color:#fff;font-size:.72rem;
   letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:3px;
   font-weight:600;margin-bottom:10px;font-family:var(--head)}
@@ -80,7 +83,15 @@ tbody tr[aria-expanded=true]{background:#f4eef6}
 .kv{margin:0 0 16px}
 .kv dt{font-family:var(--head);font-size:.73rem;text-transform:uppercase;letter-spacing:.05em;
   color:var(--burgundy);font-weight:600;margin-top:13px}
-.kv dd{margin:3px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.kv dd{margin:3px 0 0;overflow-wrap:anywhere}
+ul.bl{margin:4px 0 0;padding-left:19px}
+ul.bl li{margin:0 0 5px;padding-left:2px}
+ul.bl li::marker{color:var(--claret)}
+ul.bl.sub{margin:5px 0 0;padding-left:17px}
+ul.bl.sub li{margin:0 0 4px;font-size:.96em}
+ul.bl.sub li::marker{color:var(--orange)}
+.oppbody{font-size:.89rem;color:#443b48}
+.oppbody ul.bl{margin:2px 0 0}
 .detail h4{margin-top:20px;color:var(--burgundy);font-size:.94rem;
   border-bottom:1px solid var(--line);padding-bottom:5px}
 .close{float:right;background:var(--grey);border:1px solid var(--line);border-radius:5px;
@@ -100,11 +111,13 @@ footer{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);font-s
   <div class="wrap">
     <div class="badge">Follow-up after the conference</div>
     <h1>AVPN 2026 &mdash; funder outreach dashboard</h1>
-    <p>New funding prospects for the Centre for Social and Behaviour Change, Ashoka University,
-       drawn from the AVPN Global Conference 2026 attendee list. The conference took place on
-       25&ndash;27 August 2026 in New Delhi, so this is <strong>follow-up after the event</strong>,
-       not preparation before it. Organisations CSBC already works with were removed before the
-       research began. Data pulled <span id="gen"></span>.</p>
+    <ul class="lede">
+      <li>New funders for CSBC, found in the AVPN Global Conference 2026 attendee list.</li>
+      <li>The conference has already happened: 25&ndash;27 August 2026, New Delhi.
+          So this is <strong>follow-up, not preparation</strong>.</li>
+      <li>Funders CSBC already works with were taken out before the research started.</li>
+      <li>Data pulled <span id="gen"></span>.</li>
+    </ul>
     <nav role="tablist">
       <button role="tab" aria-selected="true"  aria-controls="p-over"   id="t-over">Overview</button>
       <button role="tab" aria-selected="false" aria-controls="p-orgs"   id="t-orgs">Organisations</button>
@@ -119,21 +132,21 @@ footer{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);font-s
   <div class="note" id="cov"></div>
   <div class="charts">
     <div class="card"><h3>All organisations by tier</h3>
-      <p class="count">Tier A is the most promising. Covers the whole attendee list.</p><div id="c-tier"></div></div>
+      <p class="count">Tier A is the most promising. Covers everyone on the list.</p><div id="c-tier"></div></div>
     <div class="card"><h3>Researched organisations by fit</h3>
-      <p class="count">How well each one fits CSBC&rsquo;s work.</p><div id="c-align"></div></div>
+      <p class="count">How well each one fits what CSBC does.</p><div id="c-align"></div></div>
     <div class="card"><h3>Researched organisations by workstream</h3>
-      <p class="count">Which CSBC team would lead.</p><div id="c-ws"></div></div>
+      <p class="count">Which CSBC team would lead the work.</p><div id="c-ws"></div></div>
   </div>
   <div class="card"><h3>Strongest opportunities</h3>
-    <p class="count">Every researched organisation rated a strong fit. Select one to open its full record.</p>
+    <p class="count">The best fits we found. Click any name to see the full record.</p>
     <div id="opps"></div></div>
 </section>
 
 <section class="panel" id="p-orgs" role="tabpanel" aria-labelledby="t-orgs" hidden>
   <div class="card">
     <h3>Researched organisations</h3>
-    <p class="count">Full dossiers. Select any row to open the complete record.</p>
+    <p class="count">Click any row to see everything we found.</p>
     <div class="controls">
       <input type="search" id="o-q" placeholder="Search organisations" aria-label="Search organisations">
       <select id="o-tier" aria-label="Filter by tier"><option value="">All tiers</option></select>
@@ -142,7 +155,7 @@ footer{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);font-s
     </div>
     <p class="count" id="o-count"></p>
     <div class="scroll"><table><thead><tr>
-      <th>Organisation</th><th>Tier</th><th>Fit</th><th>Workstream</th><th>Summary</th>
+      <th>Organisation</th><th>Tier</th><th>Fit</th><th>Workstream</th><th>Why they fit</th>
     </tr></thead><tbody id="o-body"></tbody></table></div>
   </div>
   <div id="o-detail"></div>
@@ -162,7 +175,7 @@ footer{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);font-s
 <section class="panel" id="p-people" role="tabpanel" aria-labelledby="t-people" hidden>
   <div class="card">
     <h3>Attendees</h3>
-    <p class="count">Everyone on the attendee list, best prospects first. Select a row for details.</p>
+    <p class="count">Everyone who attended, best prospects first. Click a row for details.</p>
     <div class="controls">
       <input type="search" id="p-q" placeholder="Search name, title or organisation" aria-label="Search people">
       <select id="p-tier" aria-label="Filter by organisation tier"><option value="">All org tiers</option></select>
@@ -188,6 +201,55 @@ const D = "—";
 const esc = s => String(s==null?"":s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const val = s => { s=(s==null?"":String(s)).trim(); return s===""?D:esc(s); };
 const cut = (s,n) => { s=(s||"").trim(); return s.length<=n ? s : s.slice(0,n).replace(/\s+\S*$/,"")+"…"; };
+/* Split a block of prose into bullet points, one per sentence. Abbreviations,
+   decimals and initials are protected so they do not split mid-sentence. The
+   wording itself is never changed - only how it is laid out. */
+const ABBR = /(e\.g|i\.e|etc|vs|Dr|Mr|Mrs|Ms|Prof|Inc|Ltd|Pvt|Co|St|No|Rs|approx|Fig|Vol|Sr|Jr|U\.S|U\.K|Ph\.D)\./gi;
+function sentences(t){
+  t=(t||"").trim(); if(!t) return [];
+  var keep=[], i=0;
+  t=t.replace(ABBR,function(m){ keep.push(m); return ""+(i++)+""; });
+  t=t.replace(/(\d)\.(\d)/g,"$1$2");
+  var parts=t.split(/(?<=[.!?])\s+(?=[A-Z0-9“"(\[])/);
+  return parts.map(function(s){
+    s=s.replace(//g,".").replace(/(\d+)/g,function(_,n){return keep[+n];});
+    return s.trim();
+  }).filter(function(s){return s.length>1;});
+}
+/* A long sentence that lists things with semicolons becomes sub-bullets, so a
+   400-character clause chain reads as separate points. Wording is untouched. */
+function subSplit(s){
+  if(s.length<190 || s.indexOf("; ")<0) return null;
+  var head="", rest=s, c=s.indexOf(": ");
+  if(c>0 && c<130){ head=s.slice(0,c+1); rest=s.slice(c+1).trim(); }
+  var parts=rest.split(/;\s+/).map(function(x){return x.trim();}).filter(function(x){return x.length>1;});
+  if(parts.length<2) return null;
+  parts=parts.map(function(x,i){
+    if(i===parts.length-1) x=x.replace(/^and\s+/i,"");
+    return x.charAt(0).toUpperCase()+x.slice(1);
+  });
+  return {head:head, parts:parts};
+}
+/* Render prose as a bullet list. Falls back to a dash when empty. */
+function bullets(t){
+  var s=sentences(t);
+  if(!s.length) return D;
+  var html=s.map(function(x){
+    var sub=subSplit(x);
+    if(!sub) return '<li>'+esc(x)+'</li>';
+    return '<li>'+(sub.head?esc(sub.head):'')
+      +'<ul class="bl sub">'+sub.parts.map(function(q){return '<li>'+esc(q)+'</li>';}).join("")+'</ul></li>';
+  }).join("");
+  if(s.length===1 && html.indexOf("<ul")<0) return esc(s[0]);
+  return '<ul class="bl">'+html+'</ul>';
+}
+/* Render a pipe or semicolon separated field as bullets. */
+function listOf(t,sep){
+  var parts=(t||"").split(sep||"|").map(function(x){return x.trim();}).filter(Boolean);
+  if(!parts.length) return D;
+  if(parts.length===1) return esc(parts[0]);
+  return '<ul class="bl">'+parts.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul>';
+}
 const $  = id => document.getElementById(id);
 
 $("gen").textContent = DATA.generated;
@@ -215,8 +277,8 @@ $("stats").innerHTML=[
   [C.grants,"past grants found"]
 ].map(function(x){return '<div class="stat"><b>'+x[0].toLocaleString("en-IN")+'</b><span>'+x[1]+'</span></div>';}).join("");
 
-$("cov").textContent = C.researched+" of "+C.orgs_total+" organisations have been researched in depth so far, "
-  + "so the fit and workstream charts below describe those "+C.researched+" only. The tier chart covers all "+C.orgs_total+".";
+$("cov").innerHTML = "<strong>We have researched "+C.researched+" of "+C.orgs_total+" organisations so far.</strong> "
+  + "The fit and workstream charts cover only those "+C.researched+". The tier chart covers all "+C.orgs_total+".";
 
 function chart(el,obj,order,colours){
   var keys = order.filter(function(k){return obj[k]!=null;});
@@ -238,7 +300,7 @@ var strong = DATA.orgs.filter(function(o){return o.alignment==="strong";});
 $("opps").innerHTML = strong.length ? strong.map(function(o){
   return '<div class="opp"><h4><a href="#" data-org="'+esc(o.org)+'">'+esc(o.org)+'</a></h4>'
   + '<div class="meta"><span class="tag t-'+esc(o.tier)+'">Tier '+esc(o.tier)+'</span> &nbsp; '+val(o.primary_workstream)+'</div>'
-  + '<p>'+esc(cut(o.pitch_angle,210))+'</p></div>';}).join("")
+  + '<div class="oppbody">'+bullets(o.pitch_angle)+'</div></div>';}).join("")
   : '<p class="empty">No organisations rated a strong fit.</p>';
 $("opps").addEventListener("click",function(e){
   var a=e.target.closest("a[data-org]"); if(!a) return;
@@ -265,13 +327,16 @@ fill($("p-rank"),uniq(DATA.people.map(function(p){return p.priority_rank;})).sor
 var OFIELDS=["tier","org_type","data_quality_tier","forward_strategy_summary","india_gs_footprint",
  "bsci_track_record","recent_grants_summary","open_rfps","alignment","primary_workstream",
  "secondary_workstreams","workstream_rationale","aligned_niches","pitch_angle","csbc_example_projects","notes"];
-var OLABEL={tier:"Tier",org_type:"Type of organisation",
- data_quality_tier:"How good is our data",forward_strategy_summary:"What they say they want to fund",
- india_gs_footprint:"India and Global South work",bsci_track_record:"Have they funded behavioural science before",
- recent_grants_summary:"Recent grants",open_rfps:"Open calls",alignment:"Fit with CSBC",
- primary_workstream:"Main workstream",secondary_workstreams:"Other workstreams",
- workstream_rationale:"Why that workstream",aligned_niches:"Where we overlap",
- pitch_angle:"What to pitch",csbc_example_projects:"CSBC projects to cite",notes:"Research notes"};
+var OLABEL={tier:"Tier",org_type:"What kind of organisation",
+ data_quality_tier:"How good our data is",forward_strategy_summary:"What they say they want to fund",
+ india_gs_footprint:"What they do in India",
+ bsci_track_record:"Have they funded behavioural science before",
+ recent_grants_summary:"What they funded recently",open_rfps:"Open calls you can apply to",
+ alignment:"How well they fit CSBC",
+ primary_workstream:"Which CSBC team leads",secondary_workstreams:"Other CSBC teams involved",
+ workstream_rationale:"Why that team",aligned_niches:"Where our work overlaps",
+ pitch_angle:"What to pitch them",csbc_example_projects:"CSBC projects to mention",
+ notes:"Research notes"};
 
 function orgFiltered(){
   var q=$("o-q").value.trim().toLowerCase(), t=$("o-tier").value, a=$("o-align").value, w=$("o-ws").value;
@@ -299,8 +364,13 @@ function openOrg(name){
   var urls=(o.source_urls||"").split("|").map(function(s){return s.trim();})
              .filter(function(s){return /^https?:\/\//.test(s);});
   var h='<div class="detail"><button class="close" id="o-close">Close</button><h3>'+esc(o.org)+'</h3><dl class="kv">';
+  var PROSE=["forward_strategy_summary","india_gs_footprint","bsci_track_record",
+             "recent_grants_summary","workstream_rationale","pitch_angle","notes"];
+  var PIPED={aligned_niches:"|", csbc_example_projects:"|", secondary_workstreams:"|", open_rfps:";"};
   OFIELDS.forEach(function(f){ if(!(f in o)) return;
-    h+='<dt>'+esc(OLABEL[f]||f)+'</dt><dd>'+val(o[f])+'</dd>'; });
+    var body = PROSE.indexOf(f)>=0 ? bullets(o[f])
+             : (PIPED[f] ? listOf(o[f],PIPED[f]) : val(o[f]));
+    h+='<dt>'+esc(OLABEL[f]||f)+'</dt><dd>'+body+'</dd>'; });
   h+='<dt>Sources</dt><dd>'+(urls.length?urls.map(function(u,i){
         return '<a href="'+esc(u)+'" target="_blank" rel="noopener">Source '+(i+1)+'</a>';}).join(" &middot; "):D)+'</dd>';
   if(o.source_dates) h+='<dt>Source dates</dt><dd>'+val(o.source_dates)+'</dd>';
@@ -391,8 +461,8 @@ $("p-body").addEventListener("click",function(e){
    + '<dt>Title</dt><dd>'+val(p.title)+'</dd><dt>Organisation</dt><dd>'+val(p.organisation)+'</dd>'
    + '<dt>Organisation tier</dt><dd>'+val(p.org_tier)+'</dd><dt>Seniority</dt><dd>'+val(p.seniority_read)+'</dd>'
    + '<dt>Priority</dt><dd>'+val(p.priority_rank)+'</dd>'
-   + '<dt>Conversation hook</dt><dd>'+val(p.conversation_hook)+'</dd>'
-   + '<dt>Public signal</dt><dd>'+val(p.personal_signal)+'</dd>'
+   + '<dt>How to open the conversation</dt><dd>'+bullets(p.conversation_hook)+'</dd>'
+   + '<dt>What they have said or done in public</dt><dd>'+bullets(p.personal_signal)+'</dd>'
    + '<dt>Email status</dt><dd>'+val(p.email_status)+'</dd>'
    + '<dt>Profile and source links</dt><dd>'+(p._urls&&p._urls.length?p._urls.map(function(u){
        return '<a href="'+esc(u.url)+'" target="_blank" rel="noopener noreferrer">'+esc(u.url)+'</a>';}).join('<br>'):D)+'</dd>';
